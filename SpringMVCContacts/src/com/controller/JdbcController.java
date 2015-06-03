@@ -2,6 +2,7 @@ package com.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,4 +22,23 @@ public class JdbcController {
 		modelAndView.addObject("searchUserGet", bean);
 		return modelAndView;
 	}
+	
+	@RequestMapping(value="/searchJdbcContact", method=RequestMethod.POST)
+	public ModelAndView searchContact(@ModelAttribute("searchlist2") Contact contact) {
+		
+		ModelAndView modelAndView = new ModelAndView("JdbcSearchResult");
+		
+		Contact bean = null;
+		try {
+			bean = Service.searchContactDetails(contact);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		modelAndView.addObject("searchResultPost", bean);
+		
+		return modelAndView;
+	}
+	
+	
 }
