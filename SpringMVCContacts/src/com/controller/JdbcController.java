@@ -18,8 +18,8 @@ public class JdbcController {
 	@RequestMapping(value="/searchJdbcContact", method=RequestMethod.GET)
 	public ModelAndView searchContact() {
 		ModelAndView modelAndView = new ModelAndView("JdbcSearch");
-		Contact bean = new Contact();
-		modelAndView.addObject("searchUserGet", bean);
+		Contact contact = new Contact();
+		modelAndView.addObject("searchUserGet", contact);
 		return modelAndView;
 	}
 	
@@ -40,5 +40,26 @@ public class JdbcController {
 		return modelAndView;
 	}
 	
+	@RequestMapping(value="/insertJdbcContact", method=RequestMethod.GET)
+	public ModelAndView insertContactDetails() {
+		ModelAndView modelAndView = new ModelAndView("JdbcInsert");
+		
+		Contact contact = new Contact();
+		modelAndView.addObject("insertUser", contact);
+		modelAndView.addObject("status", "success");
+		
+		return modelAndView;
+	}
 	
+	@RequestMapping(value="/insertJdbcContact", method=RequestMethod.GET)
+	public ModelAndView insertContactDetails(@ModelAttribute("insertUser") Contact contact) {
+		ModelAndView modelAndView = new ModelAndView("JdbcInsert");
+		try {
+			Service.insertContactDetails(contact);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		modelAndView.addObject("insertUserPost", contact);
+		return modelAndView;
+	}
 }
