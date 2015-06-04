@@ -25,11 +25,11 @@
   <jd:script location="classpath:test-data.sql"/>
  </jd:embedded-database>
  
- <bean id="SpringJdbcDao"  class="com.dao.SpringJdbcDaoImpl">
+ <bean id="SpringJdbcDao"  class="com.dao.JdbcDaoImplementation">
   <property name="dataSource" ref="dataSource1"/>
  </bean>
-  <bean id="SpringJdbcService"  class="com.service.SpringJdbcServiceImpl">
-  <property name="springJdbcDao" ref="SpringJdbcDao"/>
+  <bean id="SpringJdbcService"  class="com.service.JdbcServiceImplementation">
+  <property name="jdbcDao" ref="SpringJdbcDao"/>
  </bean>
  
 </beans>

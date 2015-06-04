@@ -19,14 +19,15 @@ public class JdbcDaoImplementation implements SpringJdbcDao {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Contact searchContactDetails(Contact contact) {
-		String queryInitial = "select * from vng_mem where NAME ='"
+		String queryInitial = "select * from contacts where NAME ='"
 				+ contact.getName() + "'";
 		
 		System.out.println("Initial query: " + queryInitial);
 
-		List listContacts = jdbcTemplate.query(queryInitial, new RowMapper() {
+		List<?> listContacts = jdbcTemplate.query(queryInitial, new RowMapper() {
 			public Object mapRow(ResultSet resultSet, int rowNum)
 				throws SQLException {
 				return new Contact(resultSet.getString("name"),
@@ -45,7 +46,7 @@ public class JdbcDaoImplementation implements SpringJdbcDao {
 	@Override
 	public void insertContactDetails(Contact contactDetailsBean) {
 
-		String query = "insert into vng_mem (NAME, DOB, EMAIL, PHONE, ADDRESS, PINCODE, COUNTRY)"
+		String query = "insert into contacts (NAME, DOB, EMAIL, PHONE, ADDRESS, PINCODE, COUNTRY)"
 				+ " VALUES (?,?,?,?,?,?,?)";
 		
 		jdbcTemplate.update(
